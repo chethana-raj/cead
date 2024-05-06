@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button with Animated Hover</title>
+<style>
+/* Button styling */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff; /* Change this to your desired button color */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+.button:hover {
+  background-color: #0056b3; /* Change this to your desired hover color */
+}
+
+/* Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.button:hover {
+  animation: pulse 0.5s ease infinite alternate;
+}
+</style>
+</head>
+<body>
+<p><a href="http://127.0.0.1:7860" class="button">Our chatbot is here to assist you</a></p>
+</body>
+</html>

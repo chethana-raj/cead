@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get JSON Data</title>
+</head>
+<body>
+    <button onclick="getData()">Get JSON Data</button>
+    <div id="response"></div>
+
+    <script>
+        function getData() {
+            var xhr = new XMLHttpRequest();
+            var url = "https://4f9f-34-105-127-222.ngrok-free.app/upload";
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var jsonResponse = JSON.parse(xhr.responseText);
+                        displayResponse(jsonResponse);
+                    } else {
+                        displayResponse("Error: " + xhr.status);
+                    }
+                }
+            };
+
+            xhr.open("GET", url, true);
+            xhr.send();
+        }
+
+        function displayResponse(response) {
+            var responseContainer = document.getElementById("response");
+
+            if (typeof response === "string") {
+                responseContainer.textContent = response;
+            } else {
+                var resultArray = JSON.parse(response.result);
+                responseContainer.innerHTML = "<pre>" + JSON.stringify(resultArray, null, 2) + "</pre>";
+            }
+        }
+    </script>
+</body>
+</html>

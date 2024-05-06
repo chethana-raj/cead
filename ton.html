@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get JSON Data</title>
+</head>
+
+<body>
+    
+    <button onclick="getData()">Get JSON Data</button>
+    <div id="response"></div>
+
+    <script>
+        function getData() {
+            var xhr = new XMLHttpRequest();
+            var url = "https://e5f8-34-105-127-222.ngrok-free.app/upload";
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var jsonResponse = extractJSONFromHTML(xhr.responseText); 
+                        if (jsonResponse) {
+                            displayResponse(jsonResponse);
+                        } else {
+                            displayResponse("Error: JSON not found in response");
+                        }
+                    } else {
+                        displayResponse("Error: " + xhr.status);
+                    }
+                }
+            };
+
+            xhr.open("GET", url, true);
+            xhr.send();
+        }
+        function displayResponse(response) {
+            var responseContainer = document.getElementById("response");
+
+            if (typeof response === "string") {
+                responseContainer.textContent = response;
+            } else {
+                var resultArray = JSON.parse(response.result);
+                responseContainer.innerHTML = "<pre>" + JSON.stringify(resultArray, null, 2) + "</pre>";
+            }
+        }
+        function extractJSONFromHTML(html) {
+            console.log(html)
+            var jsonStart = html.indexOf('{'); 
+            var jsonEnd = html.lastIndexOf('}'); 
+            if (jsonStart !== -1 && jsonEnd !== -1) {
+                return html.substring(jsonStart, jsonEnd + 1); 
+            }
+            return null; 
+        }
+    </script>
+</body>
+
+</html>
